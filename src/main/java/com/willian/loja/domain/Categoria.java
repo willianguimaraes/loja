@@ -8,13 +8,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+@Data
 @Builder
-@EqualsAndHashCode
-@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Categoria implements Serializable {
 
