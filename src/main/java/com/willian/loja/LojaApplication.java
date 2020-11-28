@@ -39,6 +39,9 @@ public class LojaApplication implements CommandLineRunner {
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
 
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(LojaApplication.class, args);
 	}
@@ -119,14 +122,29 @@ public class LojaApplication implements CommandLineRunner {
 				.build();
 
 		Pagamento pgto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6 );
-		ped1.setPagamento(pgto1);
+
 
 		Pagamento pgto2 = new PagamentoComBoleto(null,EstadoPagamento.PENDENTE,ped2,sdf.parse("20/10/2017 00:00"), null);
+
+		ped1.setPagamento(pgto1);
 		ped2.setPagamento(pgto2);
 
-		usuario1.getPedidos().addAll(Arrays.asList(ped1,ped2));
+		usuario1.setPedidos(Arrays.asList(ped1,ped2));
 
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pgto1, pgto2));
+
+		ItemPedido ip1 = new ItemPedido(ped1,prod1,0.00,1,2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1,prod3,0.00,2,80.00);
+		ItemPedido ip3 = new ItemPedido(ped2,prod2,100.00,1,800.00);
+
+		ped1.setItens(Arrays.asList(ip1,ip2));
+		ped1.setItens(Arrays.asList(ip3));
+
+		prod1.setItens(Arrays.asList(ip1));
+		prod1.setItens(Arrays.asList(ip3));
+		prod1.setItens(Arrays.asList(ip2));
+
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 	}
 }

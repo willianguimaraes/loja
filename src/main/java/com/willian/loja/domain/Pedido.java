@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +16,7 @@ import java.util.Date;
 @Entity
 public class Pedido implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Date instante;
 
@@ -29,4 +30,15 @@ public class Pedido implements Serializable {
     @ManyToOne
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
+
+    @OneToMany(mappedBy = "itemPedidoPk.pedido")
+    private List<ItemPedido> itens = new ArrayList<>();
+
+    public List<Pedido> getPedidos(){
+        List<Pedido> lista = new ArrayList<>();
+        for (ItemPedido itemPedido : itens ) {
+            lista.add(itemPedido.getPedido());
+        }
+        return lista;
+    }
 }
