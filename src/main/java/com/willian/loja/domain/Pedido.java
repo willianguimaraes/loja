@@ -1,5 +1,6 @@
 package com.willian.loja.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,9 +16,12 @@ import java.util.*;
 @Builder
 @Entity
 public class Pedido implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date instante;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
@@ -34,10 +38,10 @@ public class Pedido implements Serializable {
     @OneToMany(mappedBy = "itemPedidoPk.pedido")
     private List<ItemPedido> itens = new ArrayList<>();
 
-    public List<Pedido> getPedidos(){
-        List<Pedido> lista = new ArrayList<>();
+    public List<Produto> getProdutos(){
+        List<Produto> lista = new ArrayList<>();
         for (ItemPedido itemPedido : itens ) {
-            lista.add(itemPedido.getPedido());
+            lista.add(itemPedido.getProduto());
         }
         return lista;
     }

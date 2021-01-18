@@ -1,5 +1,6 @@
 package com.willian.loja.exception;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,8 @@ public class StandartError implements Serializable {
 
     private Integer status;
     private String msg;
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Long timeStamp;
 
     public StandartError(Integer status, String msg, Long timeStamp) {

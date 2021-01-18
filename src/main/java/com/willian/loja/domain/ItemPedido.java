@@ -1,5 +1,6 @@
 package com.willian.loja.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,7 @@ import java.io.Serializable;
 @Entity
 public class ItemPedido implements Serializable {
 
+    @JsonIgnore
     @EmbeddedId
     private ItemPedidoPk itemPedidoPk = new ItemPedidoPk();
 
@@ -32,6 +34,7 @@ public class ItemPedido implements Serializable {
         this.preco = preco;
     }
 
+    @JsonIgnore
     public Pedido getPedido(){
         return itemPedidoPk.getPedido();
     }
@@ -39,6 +42,7 @@ public class ItemPedido implements Serializable {
     public Produto getProduto(){
         return itemPedidoPk.getProduto();
     }
+
     public Double getDesconto() {
         return desconto;
     }

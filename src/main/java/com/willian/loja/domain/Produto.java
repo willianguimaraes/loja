@@ -1,13 +1,11 @@
 package com.willian.loja.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Builder
@@ -22,13 +20,14 @@ public class Produto {
     private String nome;
     private Double preco;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "PRODUTO_CATEGORIA",
      joinColumns = @JoinColumn(name = "produto_id"),
     inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private List<Categoria> categorias = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "itemPedidoPk.produto")
     private List<ItemPedido> itens = new ArrayList<>();
 
@@ -37,11 +36,12 @@ public class Produto {
         this.nome = nome;
         this.preco = preco;
     }
-    
-    public List<Produto> getProdutos(){
-        List<Produto> lista = new ArrayList<>();
+
+    @JsonIgnore
+    public List<Pedido> getPedidos(){
+        List<Pedido> lista = new ArrayList<>();
         for (ItemPedido itemPedido : itens ) {
-            lista.add(itemPedido.getProduto());
+            lista.add(itemPedido.getPedido());
         }
         return lista;
     }

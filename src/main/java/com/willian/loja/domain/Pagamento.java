@@ -1,5 +1,6 @@
 package com.willian.loja.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.willian.loja.enums.EstadoPagamento;
 import lombok.*;
 
@@ -23,6 +24,7 @@ public abstract  class Pagamento implements Serializable {
 
     @Getter
     @Setter
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "pedido_id")
     @MapsId
@@ -34,7 +36,7 @@ public abstract  class Pagamento implements Serializable {
 
     public Pagamento(Integer id, EstadoPagamento pagamento, Pedido pedido) {
         this.id = id;
-        this.pagamento = pagamento.getCod();
+        this.pagamento = (pagamento == null) ? null : pagamento.getCod();
         this.pedido = pedido;
     }
 

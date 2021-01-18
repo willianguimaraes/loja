@@ -1,5 +1,6 @@
 package com.willian.loja.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.willian.loja.enums.TipoCliente;
 import lombok.*;
@@ -26,7 +27,7 @@ public class Usuario implements Serializable {
     private String cpfCnpj;
     private TipoCliente tipoCliente;
 
-    @JsonManagedReference
+
     @OneToMany(mappedBy = "usuario")
     private List<Endereco> enderecos = new ArrayList<>();
 
@@ -34,6 +35,7 @@ public class Usuario implements Serializable {
     @CollectionTable(name = "Telefone")
     private List<String> telefones = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "usuario")
     private List<Pedido> pedidos = new ArrayList<>();
 
